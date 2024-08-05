@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Hutchings' History Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .container img {
+            width: 150px;
+        }
+        .container h1 {
+            margin: 1rem 0;
+        }
+        .container h2 {
+            margin: 1rem 0;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+        }
+        .container input {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .container button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .container .error {
+            color: red;
+            margin-top: 1rem;
+        }
+        .container .toggle-password {
+            cursor: pointer;
+            margin-top: -2rem;
+            margin-bottom: 1rem;
+            align-self: flex-end;
+        }
+        .container .forgot-password, .container .help-support {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mr. Hutchings' History</h1>
+        <h2>DP History HL</h2>
+        <form id="loginForm">
+            <input type="text" id="username" name="username" placeholder="Username (case sensitive)" required>
+            <input type="password" id="password" name="password" placeholder="Password (case sensitive)" required>
+            <span class="toggle-password" onclick="togglePassword()">Show/Hide Password</span>
+            <button type="submit">Login</button>
+            <div id="error" class="error" style="display: none;"></div>
+        </form>
+        <div class="forgot-password">
+            <a href="https://docs.google.com/document/d/1cXcxy1mqBvqx3zzOuwYJ3L5Pk6LPnPvbPTffXdWcgzM/edit?usp=sharing">Lost or forgotten password?</a>
+        </div>
+        <div class="help-support">
+            <a href="mailto:mr.harold.hutchings@gmail.com">Help and Support</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = form.username.value;
+            const password = form.password.value;
+            const errorDiv = document.getElementById('error');
+
+            if (username === 'dphistory' && password === '2016ChicagoCubs') {
+                alert('Login successful!');
+                window.location.href = 'https://docs.google.com/document/d/1fjHZYvH2LQEYxwTZDbgK8kwZHh5hTvtBI6hkz6yWZS0/edit?usp=sharing';
+            } else {
+                errorDiv.style.display = 'block';
+                if (username !== 'dphistory') {
+                    errorDiv.textContent = 'User not found';
+                } else {
+                    errorDiv.textContent = 'Incorrect password';
+                }
+            }
+        });
+
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+        }
+    </script>
+</body>
+</html>
+
