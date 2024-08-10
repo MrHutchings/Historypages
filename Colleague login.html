@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mr. Hutchings' Resources for Colleagues</title>
+    <style>
+        body {
+            background-color: #f8f1e7;
+            font-family: 'Georgia', serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://via.placeholder.com/1920x1080'); /* Replace with a baroque style image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            margin-bottom: 15px;
+        }
+
+        .input-field label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            font-size: 14px;
+            color: #007bff;
+        }
+
+        .login-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-btn:disabled {
+            background-color: #ccc;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .random-message {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .help-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .help-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .help-link a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Mr. Hutchings' Resources for Colleagues</h1>
+        <h2>Welcome colleagues!</h2>
+        
+        <div id="random-message" class="random-message"></div>
+        
+        <div id="loading" class="loading" style="display: none;">Authenticating...</div>
+
+        <div class="input-field">
+            <label for="username">Username (case sensitive)</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="input-field">
+            <label for="password">Password (case sensitive)</label>
+            <input type="password" id="password" name="password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility()">Show/Hide Password</span>
+        </div>
+
+        <div id="error-message" class="error-message"></div>
+
+        <button class="login-btn" onclick="login()">Log In</button>
+
+        <div class="help-link">
+            Need help? <a href="mailto:mr.harold.hutchings@gmail.com">Contact Support</a>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "Your dedication to your students is truly inspiring.",
+            "The impact you have on young minds is immeasurable.",
+            "Your passion for teaching shines through in every lesson.",
+            "The care you show for your students' well-being is remarkable.",
+            "You make a difference in the lives of your students every day.",
+            "Your creativity in the classroom brings learning to life.",
+            "The patience you demonstrate is a gift to your students.",
+            "Your commitment to education is making the world a better place.",
+            "The support you provide your students is deeply appreciated.",
+            "Your ability to adapt and innovate is truly admirable.",
+            "The positive energy you bring to the classroom is contagious.",
+            "Your encouragement helps students believe in themselves.",
+            "The kindness you show your students fosters a safe learning environment.",
+            "Your dedication to professional growth sets a great example.",
+            "The respect you give your students empowers them to succeed.",
+            "Your ability to connect with each student is a true talent.",
+            "The thoughtful guidance you provide helps shape bright futures.",
+            "Your passion for teaching is a source of inspiration for others.",
+            "The love you have for your profession is evident in your work.",
+            "Your attention to detail ensures every student feels valued.",
+            "The way you handle challenges with grace is commendable.",
+            "Your enthusiasm for learning ignites curiosity in your students.",
+            "The dedication you show to each student's success is heartwarming.",
+            "Your positive attitude makes a lasting impact on your students.",
+            "The compassion you bring to your role is a gift to your students.",
+            "Your ability to create a welcoming classroom is appreciated by all.",
+            "The encouragement you give your students helps them grow.",
+            "Your patience with each student's unique needs is truly admirable.",
+            "The way you foster a love of learning is inspiring to witness.",
+            "Your commitment to your students' success is unwavering.",
+            "The joy you bring to teaching brightens your students' lives.",
+            "Your professionalism sets a high standard for others to follow.",
+            "The support you provide your colleagues is valued and respected.",
+            "Your ability to create engaging lessons is a testament to your skill.",
+            "The care you take in your work is reflected in your students' progress.",
+            "Your belief in your students' potential helps them achieve their best.",
+            "The enthusiasm you bring to your classroom makes learning fun.",
+            "Your resilience in the face of challenges is truly commendable.",
+            "The dedication you show to your craft is an inspiration to others.",
+            "Your positive influence extends far beyond the classroom walls.",
+            "The way you celebrate each student's achievements is heartening.",
+            "Your commitment to inclusivity makes your classroom a safe space for all.",
+            "The kindness you show your students is a model for them to follow.",
+            "Your hard work and dedication do not go unnoticed.",
+            "The passion you have for your subject inspires your students.",
+            "Your ability to make learning accessible to all is truly appreciated.",
+            "The encouragement you provide helps your students believe in themselves.",
+            "Your calm and steady presence is a source of comfort for your students.",
+            "The positive impact you have on your students' lives is invaluable.",
+            "Your dedication to nurturing young minds is truly remarkable."
+        ];
+
+        document.getElementById('random-message').innerText = messages[Math.floor(Math.random() * messages.length)];
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            const loadingIndicator = document.getElementById('loading');
+
+            errorMessage.innerText = '';
+            loadingIndicator.style.display = 'block';
+
+            setTimeout(() => {
+                loadingIndicator.style.display = 'none';
+
+                if (username === 'superteddybear' && password === '1Came,1Saw,1Forgot') {
+                    window.location.href = 'https://docs.google.com/document/d/1FOC20jGsvbfU0UNws6EE9BmnAcu4stkwNaoFvL0qlBA/edit?usp=sharing';
+                } else if (username !== 'superteddybear') {
+                    errorMessage.innerText = 'User not found';
+                } else {
+                    errorMessage.innerText = 'Incorrect password';
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
